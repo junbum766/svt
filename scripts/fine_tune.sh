@@ -1,7 +1,7 @@
 #!/bin/bash
 
 PROJECT_PATH="/data/junbum766/repo/svt"
-EXP_NAME="ts_divST_8x32_k400_to_ucf101_3"
+EXP_NAME="ts_divST_8x32_k400_to_ucf101_finetune_1"
 DATASET="ucf101"
 CHECKPOINT="/data/junbum766/repo/svt/lab/checkpoints/kinetics400_vitb_ssl.pth"
 
@@ -16,11 +16,11 @@ export CUDA_VISIBLE_DEVICES=0,1,2,3
 python -m torch.distributed.launch \
   --nproc_per_node=4 \
   --master_port="$RANDOM" \
-  eval_linear.py \
+  fine_tune.py \
   --n_last_blocks 1 \
   --arch "vit_base" \
   --pretrained_weights "$CHECKPOINT" \
-  --epochs 20 \
+  --epochs 15 \
   --lr 0.064 \
   --batch_size_per_gpu 8 \
   --num_workers 8 \
